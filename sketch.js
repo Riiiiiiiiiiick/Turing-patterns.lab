@@ -19,6 +19,12 @@ function draw() {
    fill(r,g,b);
 
    ellipse(x,y,d);
+
+   push()
+   fill(35);
+   textSize(50);
+   text('Ciao Stelline', 10,10);
+   pop()
 }
 
 function windowResized(){
