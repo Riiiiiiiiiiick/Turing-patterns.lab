@@ -4,6 +4,7 @@ function setup() {
 }
 
 function draw() {
+    push()
    translate(width/2,height/2)
 
    const d=map(sin(frameCount*0.051), -1,1,20,150)
@@ -19,12 +20,14 @@ function draw() {
    fill(r,g,b);
 
    ellipse(x,y,d);
+   pop()
 
    push()
    fill(35);
    textSize(50);
-   text('Ciao Stelline', 10,10);
+   text('Ciao Stelline', 10,50);
    pop()
+   
 }
 
 function windowResized(){
