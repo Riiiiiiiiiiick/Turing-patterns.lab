@@ -24,8 +24,8 @@ function draw() {
 
    push()
    fill(35);
-   textSize(50);
-   text('Ciao Stelline', 10,50);
+   textSize(25);
+   text('Ciao Stelline', 10,20);
    pop()
    
 }
