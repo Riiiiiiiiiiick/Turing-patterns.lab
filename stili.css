@@ -5,10 +5,17 @@
 
     h1,p {
         font-family: "Neue Haas Unica";
+        color: silver;
         letter-spacing: .4px;
         line-height: 120%;
         text-transform: uppercase;
         margin: 0;
         padding: 50px;
-        font-size: 1.1rem;
+        font-size: 1rem;
+        
     }
+
+    div {
+        height: 1.2rem;
+        width: window;
+      }
