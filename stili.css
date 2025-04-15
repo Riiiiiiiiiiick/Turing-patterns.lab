@@ -10,12 +10,22 @@
         line-height: 120%;
         text-transform: uppercase;
         margin: 0;
-        padding: 50px;
         font-size: 1rem;
         
     }
 
-    div {
-        height: 1.2rem;
-        width: window;
+    .divInt {
+        position: fixed;
+        inset: 0;
+        height: fit-content;
+        margin: auto;
+        padding: 50px;
+    }
+    
+    .divExt {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px;
       }
