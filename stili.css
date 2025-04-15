@@ -1,4 +1,14 @@
 @font-face {
-    font-family: "CustomFont";
+    font-family: "Neue Haas Unica";
     src: url("./assets/fonts/neue\ haas\ unica/") format("ttf"),
+    }
+
+    h1,p {
+        font-family: "Neue Haas Unica";
+        letter-spacing: .4px;
+        line-height: 120%;
+        text-transform: uppercase;
+        margin: 0;
+        padding: 50px;
+        font-size: 1.1rem;
     }
