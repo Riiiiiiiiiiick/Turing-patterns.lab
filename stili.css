@@ -1,20 +1,135 @@
-h1,p {
+h1, h3, .testata, .linkp{
     font-family: "helvetica";
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+body {
+    margin: 2em 1em;
+    background-color:rgb(10, 10, 10);
+}
+section {
+    display: block;
+    margin-left: 2.2em; 
+    margin-right: 50vw;
+    border-top: 0.15px solid silver;
+    border-left: 0.15px solid silver;
+}
+
+p {
+    margin: 0;
+    font-family: "helvetica";
+    font-weight: 500;  
     color: silver;
-    letter-spacing: .4px;
-    line-height: 120%;
+    background-color:rgb(10, 10, 10);
+}
+h3 { 
     text-transform: uppercase;
     margin: 0;
-    font-size: 1.1rem;
-    font-weight: 500;
-    }
+}
+
+.divtop {
+    width: 100%;
+}
+
+.labo,.tools,.ric,.ricl,.biblio {
+    text-align: left;
+    color: silver;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 200;
+    font-style: normal;
+    font-size: small;
+}
+
+.labo, .tools {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.labo:hover, .tools:hover {
+    text-decoration: underline;
+}
+
+.tools {
+    left: 50%;
+    /*transform: translateX(-50%);*/
+    padding-top: 2.2em;
+    padding-left: 1.1em;
+}
+
+.labo {
+    padding-top: 2.2em;
+    padding-left: 2.2em;
+}
+.ric {
+    position: absolute;
+    bottom: 0;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.ricl{ 
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.biblio{
+    position: absolute;
+    bottom: 0;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.ricl:hover, .biblio:hover {
+    text-decoration: underline;
+}
+
+.biblio {
+    left: 50%;
+    /*transform: translateX(-50%);*/
+    padding-bottom: 2.2em;
+    padding-left: 1.1em;
+}
+
+.ric {
+    padding-bottom: 2.2em;
+    padding-left: 2.2em;
+}
+
+.contenuto {
+    max-width: 40em;
+    padding-top: 4.4em;
+    padding-left: 1.1em;
+    padding-bottom: 1.1em;
+}
+.testata {
+    color: silver;
+    display: block;
+    height: 1.1em;
+    letter-spacing: 1,25px;
+    font-size: 3.3rem;
+    cursor: pointer;
+    padding: top 2px;
+    padding-left: 0.1em;
+}
+
+.chiuso {
+    display: none;
+}
 
 .divInt {
     position: fixed;
     inset: 0;
     height: fit-content;
     margin: auto;
-    padding: 50px;
+    padding: 2.2em;
     }
     
  .divExt {
@@ -22,5 +137,5 @@ h1,p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 2.2em;
       }
