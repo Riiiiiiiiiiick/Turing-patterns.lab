@@ -26,6 +26,28 @@
         mathmlSpacing: false,
         matchFontHeight: false,
         fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+      },
+      startup: {
+        ready: function() {
+          MathJax.startup.defaultReady();
+          // Set IBM Plex Mono as the font for all MathJax elements
+          document.head.insertAdjacentHTML('beforeend', `
+            <style>
+              .MJX-TEX {
+                font-family: 'IBM Plex Mono', monospace !important;
+              }
+              .mjx-chtml {
+                font-family: 'IBM Plex Mono', monospace !important;
+              }
+              .mjx-chtml .mjx-char {
+                font-family: 'IBM Plex Mono', monospace !important;
+              }
+              .mjx-math * {
+                font-family: 'IBM Plex Mono', monospace !important;
+              }
+            </style>
+          `);
+        }
       }
     };
   </script>
@@ -38,20 +60,33 @@
 		canvas {
 			display: block;
 		}
+
         .mjx-chtml {
-            font-weight: 200;
-            font-family: "IBM Plex Mono", monospace;
+            font-weight: 200 !important;
+            font-family: "IBM Plex Mono", monospace !important;
             font-style: normal;
             padding-bottom: 1.1em;
             text-indent: 1.1em;
-            text-transform: lowercase;
+        }
+        
+        .mjx-math * {
+            font-family: "IBM Plex Mono", monospace !important;
+            font-weight: 200 !important;
+        }
+        mjx-container {
+            font-family: "IBM Plex Mono", monospace !important;
+            font-weight: 200 !important;
+        }
+        mjx-container mjx-math {
+            font-family: "IBM Plex Mono", monospace !important;
+            font-weight: 200 !important;
         }
 	</style>
 </head>
 
 <body>
     <div class="divtoplab" style="display: block;">
-		<p> <a class="labo" rel="index" href="/index.html">home</a> <a class="tools" rel="toolset" href="/toolset.html">toolset</a>
+		<p> <a class="labo" rel="index" href="/index.html">home</a> <a class="tools" rel="toolset" href="/toolset.html">playground</a>
 			</p> 
 	</div>
 
@@ -65,21 +100,22 @@
         </p>
         <p>
         Una prima descrizione del sistema Reaction-Diffusion venne presentata da Alan Turing attraverso <a rel="The chemical basis of morphogenesis" href="https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.1952.0012" class="links">The chemical basis of morphogenesis</a> (1952).
-        L’articolo descrive come il processo di sviluppo di determinate forme o strutture organiche è determinato da sistemi di sostanze chimiche chiamate morfogeni.
+        L'articolo descrive come il processo di sviluppo di determinate forme o strutture organiche è determinato da sistemi di sostanze chimiche chiamate morfogeni.
 	    I morfogeni si occupano di governare lo sviluppo dei tessuti nonché il posizionamento di determinate cellule in esso.
-	    Turing oltre ad aver evidenziato la questione dal punto di vista biologico, argomentando come questi processi avvengano e definiscano un organismo a partire dalla fase embrionale dello sviluppo, ha fornito anche un’attenta analisi del fenomeno dal punto di vista matematico (Inoltre descrisse come queste strutture, partendo da una situazione di equilibrio, possano sviluppare dei pattern più o meno regolari a partire da dei disturbi randomici e da oscillazioni meccaniche ed elettriche).
+	    Turing oltre ad aver evidenziato la questione dal punto di vista biologico, argomentando come questi processi avvengano e definiscano un organismo a partire dalla fase embrionale dello sviluppo, ha fornito anche un'attenta analisi del fenomeno dal punto di vista matematico (Inoltre descrisse come queste strutture, partendo da una situazione di equilibrio, possano sviluppare dei pattern più o meno regolari a partire da dei disturbi randomici e da oscillazioni meccaniche ed elettriche).
         </p>
 
         <p class="subheaderpost">
             02. modelli e pattern
         </p>
         <p>
-        I modelli di Reaction-Diffusion si basano principalemnte sull’interazione di 2 soggetti dispersi su di un piano. Essi, da un punto di vista biologico, sono considerabili come sostanza chimiche mentre da quello matematico come due variabili che assumono un valore diverso a seguito della loro stessa elaborazione attraverso una funzione.
+        I modelli di Reaction-Diffusion si basano principalemnte sull'interazione di 2 soggetti dispersi su un piano. Essi, da un punto di vista biologico, sono considerabili come sostanza chimiche mentre da quello matematico come delle variabili che assumono un valore diverso a seguito della loro stessa elaborazione attraverso una funzione.
         Quando i soggetti vengono dispersi inizia una reazione di diffusione e conversione tra le due sostanze, con la conseguente generazione di pattern diversi tra loro. Le forme ottenute dipendono da una serie di variabili componenti l'equazione che descrive il modello di Reaction-Diffusion. 
         Questo comportamento è descritto in maniera generale dal modello Gray-Scott e dalle sue due equazioni (una a sostanza), i quali output generano un loop che permette alla reazione e di modificarsi ed avvenire col passare del tempo. <br>
-        Le equazioni descrivono il modello Gray-Scott: <br>
-        <p class="mjx-chtml" style="padding-top: 1.1em;"> \(\displaystyle\frac{\partial A}{\partial t} = D_A \nabla^2 A - A B^2 + f(1 - A)\)</p>
-        <p class="mjx-chtml">\(\displaystyle\frac{\partial B}{\partial t} = D_B \nabla^2 B + A B^2 - (k + f) B\)</p>
+        Le seguenti equazioni descrivono il modello Gray-Scott: <br>
+        <div class="equation" style="padding-top: 1.1em;">\( \displaystyle\frac{\partial A}{\partial t} = D_A \nabla^2 A - A B^2 + f(1 - A)\)</div>
+        <div class="equation">\(\displaystyle\frac{\partial B}{\partial t} = D_B \nabla^2 B + A B^2 - (k + f) B\)</div> <br>
+        La variazione degli elementi di queste funzioni restituiscono una serie di output visivi diversi. Nel tempo si è iniziato a classificare le simulazioni ottenute in: <span class="texti">particelle stazionarie (mitosi), strisce (coralli), modelli a bersaglio e spiraliformi</span>.
         </p>
     </div>
     </section>
