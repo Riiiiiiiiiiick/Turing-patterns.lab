@@ -4,8 +4,8 @@ let next;
 let scala = 1;
 let cols, rows;
 
-let dA = 1.1;
-let dB = 0.6;
+let dA = 1.15;
+let dB = 0.55;
 let feed = 0.04388;
 let k = 0.06113;
 
@@ -82,7 +82,7 @@ function draw() {
     scala = 1;
   } else {
     let t = constrain((elapsed - 2000) / 3000, 0, 1);
-    scala = floor(lerp(1, 4, t * t));
+    scala = floor(lerp(1, 5, t * t));
   }
 
   if (scala !== lastScala) {
