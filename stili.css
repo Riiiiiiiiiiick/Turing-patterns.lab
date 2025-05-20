@@ -98,6 +98,8 @@ p {
 
 .caption {
     font-size: small;
+    padding-top: 0.15em;
+    padding-bottom: 2.2em;
 }
 
 h3 { 
