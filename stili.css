@@ -1,30 +1,63 @@
-h1, h3, .testata, .linkp{
-    font-family: "helvetica";
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
+h1, h3, .testata, .linkp {
+  font-family: Helvetica, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin: 0;
 }
 
 body {
-    margin: 2em 1em;
-    background-color:rgb(10, 10, 10);
-}
-section {
-    display: block;
-    margin-left: 2.2em; 
-    margin-right: 50vw;
-    border-top: 0.15px solid silver;
-    border-left: 0.15px solid silver;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(10, 10, 10);
+  font-family: "Helvetica";
+  color: silver;
 }
 
-p {
-    margin: 0;
-    font-family: "helvetica";
-    font-weight: 500;  
-    color: silver;
-    background-color:rgb(10, 10, 10);
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.2em;
+  padding: 4.4em 2.2em 2.2em;
+  box-sizing: border-box;
 }
+
+.column.testo,.column.foto {
+  max-width: 100%;
+}
+
+section {
+  margin-bottom: 2.2em;
+}
+
+
+p {
+  font-weight: 500;
+  margin: 0;
+}
+
+.links {
+  color: silver;
+  text-decoration: none;
+  font-weight: 200;
+  font-family: "IBM Plex Mono", monospace;
+  font-style: normal;
+}
+
+.subheader,.subheaderpost {
+  font-weight: 200;
+  font-family: "IBM Plex Mono", monospace;
+  font-style: normal;
+  padding-bottom: 1.1em;
+  text-indent: 1.1em;
+  text-transform: lowercase;
+}
+
+.subheaderpost {
+  padding-top: 2.2em;
+}
+
 h3 { 
     text-transform: uppercase;
     margin: 0;
@@ -34,13 +67,14 @@ h3 {
     width: 100%;
 }
 
-.labo,.tools,.ric,.ricl,.biblio {
+.labo,.tools,.ric,.ricl,.biblio{
     text-align: left;
     color: silver;
     font-family: "IBM Plex Mono", monospace;
     font-weight: 200;
     font-style: normal;
     font-size: small;
+    text-transform: lowercase;
 }
 
 .labo, .tools {
@@ -52,7 +86,8 @@ h3 {
 }
 
 .labo:hover, .tools:hover {
-    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration: underline 0.15px solid silver;
 }
 
 .tools {
@@ -66,6 +101,7 @@ h3 {
     padding-top: 2.2em;
     padding-left: 2.2em;
 }
+
 .ric {
     position: absolute;
     bottom: 0;
@@ -87,8 +123,24 @@ h3 {
     text-decoration: none;
 }
 
-.ricl:hover, .biblio:hover {
-    text-decoration: underline;
+.ricl:hover, .biblio:hover, .links:hover {
+    text-underline-offset: 0.15em;
+    text-decoration: underline 0.15px solid silver;
+}
+
+.links:hover {
+  text-decoration: underline 0.15px solid silver;
+  text-underline-offset: 0.15em;
+}
+
+.columns{
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2.2em;
+    display: grid;
+    -ms-scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;
+    overflow-x: scroll;
+
 }
 
 .biblio {
@@ -106,26 +158,20 @@ h3 {
 .contenuto {
     max-width: 40em;
     padding-top: 4.4em;
-    padding-left: 1.1em;
+    padding-left: 2.2em;
     padding-bottom: 1.1em;
 }
 .testata {
-    color: silver;
-    display: block;
-    height: 1.1em;
-    letter-spacing: 1,25px;
-    font-size: 3.3rem;
-    cursor: pointer;
-    padding: top 2px;
-    padding-left: 0.1em;
-}
-
-.chiuso {
-    display: none;
+  font-size: 3.3em;
+  margin-bottom: 1.1em;
+  padding-left: 0.15em;
+  border-top: 0.15px solid silver;
+  border-left: 0.15px solid silver;
 }
 
 .divInt {
     position: fixed;
+    display: block;
     inset: 0;
     height: fit-content;
     margin: auto;
@@ -139,3 +185,10 @@ h3 {
     align-items: center;
     padding: 2.2em;
       }
+
+@media (max-width: 768px) {
+  .columns {
+    grid-template-columns: 1fr;
+    padding: 2.2em;
+  }
+}
