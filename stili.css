@@ -58,6 +58,12 @@ p {
   padding-top: 2.2em;
 }
 
+.texti {
+    font-weight: 200;
+    font-family: "IBM Plex Mono", monospace;
+    text-transform: lowercase;
+}
+
 h3 { 
     text-transform: uppercase;
     margin: 0;
