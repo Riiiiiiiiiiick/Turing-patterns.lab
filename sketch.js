@@ -1,31 +1,137 @@
-function setup(){
-  createCanvas(windowWidth,windowHeight);
+var grid;
+var next;
+
+var dA = 1.2/4;
+var dB = 0.6/4;
+var feed = 0.056;
+var k = 0.062;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  frameRate(30);
+  pixelDensity(1);
+  inizioSim();
+
+    /*
+  for (var i = width/2-50; i < width/2+50; i++) {
+    for (var j = height/2-50; j < height/2+50; j++) {
+      grid[i][j].b = 1;
+    }
+  }
+*/
 }
 
-function draw(){
-  background(10, 10, 10);
-  pixelDensity(4)
+function inizioSim() {
+  grid = [];
+  next = [];
 
-  stroke(192,192,192);
-  noFill();
-  strokeWeight(0.75);
+  for (let x = 0; x < width; x++) {
+    grid[x] = [];
+    next[x] = [];
+    for (let y = 0; y < height; y++) {
+      grid[x][y] = { a: 1, b: 0 };
+      next[x][y] = { a: 1, b: 0 };
+    }
+  }
 
-  strokeJoin(ROUND);
-  textSize(52.8);
-  textLeading(45);
-  textStyle(BOLD);
-  textFont("Helvetica");
-  text('REACTION /\nDIFFUSION',30,height/2);
+  let pg = createGraphics(width, height);
+  pg.textSize(100);
+  pg.textAlign(LEFT, CENTER);
+  pg.textSize(52.8);
+  pg.textLeading(45);
+  pg.textStyle(BOLD);
+  pg.textFont("Helvetica");
+  pg.text('ORGANICO /\nCOMPUTAZIONALE', width / 2, height / 2);
+  pg.text('REACTION /\nDIFFUSION', 30, height / 2);
 
-  fill(192,192,192)
-  noStroke();
-  text('ORGANICO /\nCOMPUTAZIONALE',width/2+12,height/2);
-
+  for (let i = 0; i < width; i++) {
+    for (let j = 0; j < height; j++) {
+      let c = pg.get(i, j);
+      let brightness = c[3];
+      if (brightness > 0) {
+        grid[i][j].b = 1;
+      }
+    }
+  }
 }
 
+
+
+function draw() {
+  background(10,10,10);
+  frameRate(30)
+
+  for (var x = 1; x < width - 1; x++) {
+    for (var y = 1; y < height - 1; y++) {
+      var a = grid[x][y].a;
+      var b = grid[x][y].b;
+      next[x][y].a =a + dA * laplaceA(x, y) - a * b * b + feed * (1 - a);
+      next[x][y].b = b + dB * laplaceB(x, y) + a * b * b - (k + feed) * b;
+
+      next[x][y].a = constrain(next[x][y].a, 0, 1);
+      next[x][y].b = constrain(next[x][y].b, 0, 1);
+    }
+  }
+
+  loadPixels();
+  for (var x = 0; x < width; x++) {
+  for (var y = 0; y < height; y++) {
+    var pix = (x + y * width) * 4;
+    var a = next[x][y].a;
+    var b = next[x][y].b;
+    var c = floor((a - b) * 255);
+    c = constrain(c, 0, 255);
+
+  c = map(255 - c, 0, 255, 10, 192);
+  c = floor(c);
+
+  pixels[pix + 0] = c;
+  pixels[pix + 1] = c;
+  pixels[pix + 2] = c;
+  pixels[pix + 3] = 255;
+
+  }
+}
+  updatePixels();
+  swap();
+}
+
+function laplaceA(x, y) {
+  var sumA = 0;
+  sumA += grid[x][y].a * -1;
+  sumA += grid[x - 1][y].a * 0.2;
+  sumA += grid[x + 1][y].a * 0.2;
+  sumA += grid[x][y + 1].a * 0.2;
+  sumA += grid[x][y - 1].a * 0.2;
+  sumA += grid[x - 1][y - 1].a * 0.05;
+  sumA += grid[x + 1][y - 1].a * 0.05;
+  sumA += grid[x + 1][y + 1].a * 0.05;
+  sumA += grid[x - 1][y + 1].a * 0.05;
+  return sumA;
+}
+
+function laplaceB(x, y) {
+  var sumB = 0;
+  sumB += grid[x][y].b * -1;
+  sumB += grid[x - 1][y].b * 0.2;
+  sumB += grid[x + 1][y].b * 0.2;
+  sumB += grid[x][y + 1].b * 0.2;
+  sumB += grid[x][y - 1].b * 0.2;
+  sumB += grid[x - 1][y - 1].b * 0.05;
+  sumB += grid[x + 1][y - 1].b * 0.05;
+  sumB += grid[x + 1][y + 1].b * 0.05;
+  sumB += grid[x - 1][y + 1].b * 0.05;
+  return sumB;
+}
+
+function swap() {
+  var temp = grid;
+  grid = next;
+  next = temp;
+}
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  background(10, 10, 10);
+  setup();
+  inizioSim();
 }
-
