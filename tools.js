@@ -141,3 +141,9 @@ function swap() {
   grid = next;
   next = temp;
 }
+
+function keyPressed() {
+    if (key === 's') {
+    saveCanvas('rdrt.jpg');
+    }
+}
