@@ -11,6 +11,25 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="stili.css">
+     <script>
+    window.MathJax = {
+      tex: {
+        packages: ['base']
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      },
+      chtml: {
+        scale: 1,
+        mathmlSpacing: false,
+        matchFontHeight: false,
+        fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
     <style>
 		body {
 			margin: 0;
@@ -19,32 +38,55 @@
 		canvas {
 			display: block;
 		}
+        .mjx-chtml {
+            font-weight: 200;
+            font-family: "IBM Plex Mono", monospace;
+            font-style: normal;
+            padding-bottom: 1.1em;
+            text-indent: 1.1em;
+            text-transform: lowercase;
+        }
 	</style>
 </head>
 
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js"></script>
-	<script style="display: block;" src="lab.js"></script>
-
-    <div class="divtop" style="display: block;">
+    <div class="divtoplab" style="display: block;">
 		<p> <a class="labo" rel="index" href="/index.html">home</a> <a class="tools" rel="toolset" href="/toolset.html">toolset</a>
 			</p> 
 	</div>
-		<div class="divInt" style="padding: 0px;">
+
+    <div class="columns">  
+		<div class="column testo">
     <section>
     <h3 class="testata">Introduzione</h3>
-    <div class="contenuto chiuso">
+    <div class="contenuto">
+        <p class="subheader">
+            01. tra l'organico e il computazionale
+        </p>
         <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Una prima descrizione del sistema Reaction-Diffusion venne presentata da Alan Turing attraverso <a rel="The chemical basis of morphogenesis" href="https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.1952.0012" class="links">The chemical basis of morphogenesis</a> (1952).
+        L’articolo descrive come il processo di sviluppo di determinate forme o strutture organiche è determinato da sistemi di sostanze chimiche chiamate morfogeni.
+	    I morfogeni si occupano di governare lo sviluppo dei tessuti nonché il posizionamento di determinate cellule in esso.
+	    Turing oltre ad aver evidenziato la questione dal punto di vista biologico, argomentando come questi processi avvengano e definiscano un organismo a partire dalla fase embrionale dello sviluppo, ha fornito anche un’attenta analisi del fenomeno dal punto di vista matematico (Inoltre descrisse come queste strutture, partendo da una situazione di equilibrio, possano sviluppare dei pattern più o meno regolari a partire da dei disturbi randomici e da oscillazioni meccaniche ed elettriche).
+        </p>
+
+        <p class="subheaderpost">
+            02. modelli e pattern
+        </p>
+        <p>
+        I modelli di Reaction-Diffusion si basano principalemnte sull’interazione di 2 soggetti dispersi su di un piano. Essi, da un punto di vista biologico, sono considerabili come sostanza chimiche mentre da quello matematico come due variabili che assumono un valore diverso a seguito della loro stessa elaborazione attraverso una funzione.
+        Quando i soggetti vengono dispersi inizia una reazione di diffusione e conversione tra le due sostanze, con la conseguente generazione di pattern diversi tra loro. Le forme ottenute dipendono da una serie di variabili componenti l'equazione che descrive il modello di Reaction-Diffusion. 
+        Questo comportamento è descritto in maniera generale dal modello Gray-Scott e dalle sue due equazioni (una a sostanza), i quali output generano un loop che permette alla reazione e di modificarsi ed avvenire col passare del tempo. <br>
+        Le equazioni descrivono il modello Gray-Scott: <br>
+        <p class="mjx-chtml" style="padding-top: 1.1em;"> \(\displaystyle\frac{\partial A}{\partial t} = D_A \nabla^2 A - A B^2 + f(1 - A)\)</p>
+        <p class="mjx-chtml">\(\displaystyle\frac{\partial B}{\partial t} = D_B \nabla^2 B + A B^2 - (k + f) B\)</p>
         </p>
     </div>
     </section>
 
     <section>
     <h3 class="testata">Particelle</h3>
-    <div class="contenuto chiuso">
+    <div class="contenuto">
         <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
         Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
@@ -54,8 +96,8 @@
     </section>
 
     <section>
-    <h3 class="testata">Modelli</h3>
-    <div class="contenuto chiuso">
+    <h3 class="testata">Matrice</h3>
+    <div class="contenuto">
         <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
         Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
@@ -65,8 +107,8 @@
     </section>
 
     <section>
-    <h3 class="testata">Organismi</h3>
-    <div class="contenuto chiuso">
+    <h3 class="testata">Laplace</h3>
+    <div class="contenuto">
         <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
         Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
@@ -74,14 +116,119 @@
         </p>
     </div>
     </section>
+
+     <section>
+    <h3 class="testata">Variabili</h3>
+    <div class="contenuto">
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        </p>
+    </div>
+    </section>
+
+     <section>
+    <h3 class="testata">Riferimenti</h3>
+    <div class="contenuto">
+        <p>
+        A. M. Turing, <a rel="The chemical basis of morphogenesis" href="https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.1952.0012" class="links">The chemical basis of morphogenesis</a> (1952)<br>
+        Karl Sims, <a rel="Reaction-Diffusion" href="https://www.karlsims.com/rd.html" class="links">Reaction-Diffusion Tutorial</a> (2013)<br>
+        Daniel Shiffman, <a rel="Reaction Diffusion Algorithm" href="https://thecodingtrain.com/challenges/13-reaction-diffusion" class="links">Reaction Diffusion Algorithm</a> (2016)<br>
+        Arsiliath, <a rel="Reaction Diffusion: A Visual Explanation" href="https://youtu.be/LMzYrsfTiEw?si=Sbksua0qD7H1EJCS" class="links">Reaction Diffusion: A Visual Explanation</a> (2019)<br>
+        Robert Munafo, <a rel="Reaction-Diffusion by the Gray-Scott Model" href="https://mrob.com/pub/comp/xmorphia/" class="links">Reaction-Diffusion by the Gray-Scott Model</a> (2022)<br>
+        Jason Webb, <a rel="Reaction Diffusion Playground" href="https://jasonwebb.github.io/reaction-diffusion-playground/" class="links">Reaction Diffusion playground</a> (2023)<br>
+        B. Walker, A. Townsend, A. Krause, <a rel="Visual PDE" href="https://visualpde.com/sim/?preset=GrayScott" class="links">VisualPDE</a> (2025)<br>
+        </p>
+    </div>
+    </section>
     </div>
 
-    <script>
-    document.querySelectorAll(".testata").forEach( el => {
-        el.addEventListener('click', evt => {
-            evt.target.nextElementSibling.classList.toggle("chiuso")
-        })  
-    })
-    </script>
+    <div class="column foto"> 
+        <section>
+    <h3 class="testata">Introduzione</h3>
+    <div class="contenuto">
+        <p class="subheader">
+            01. tra l'organico e il computazionale
+        </p>
+        <p>
+        Una prima descrizione del sistema Reaction-Diffusion venne presentata da Alan Turing attraverso <a rel="The chemical basis of morphogenesis" href="https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.1952.0012" class="links">The chemical basis of morphogenesis</a> (1952).
+        L’articolo descrive come il processo di sviluppo di determinate forme o strutture organiche è determinato da sistemi di sostanze chimiche chiamate morfogeni.
+	    I morfogeni si occupano di governare lo sviluppo dei tessuti nonché il posizionamento di determinate cellule in esso.
+	    Turing oltre ad aver evidenziato la questione dal punto di vista biologico, argomentando come questi processi avvengano e definiscano un organismo a partire dalla fase embrionale dello sviluppo, ha fornito anche un’attenta analisi del fenomeno dal punto di vista matematico (Inoltre descrisse come queste strutture, partendo da una situazione di equilibrio, possano sviluppare dei pattern più o meno regolari a partire da dei disturbi randomici e da oscillazioni meccaniche ed elettriche).
+        </p>
+
+        <p class="subheaderpost">
+            02. modelli e pattern
+        </p>
+        <p>
+        I modelli di Reaction-Diffusion si basano principalemnte sull’interazione di 2 soggetti. Da un punto di vista biologico essi sono considerabili come sostanza chimiche, mentre su un piano matematico come due variabili che assumono un valore diverso a seguito della loro stessa elaborazione attraverso una funzione.
+        I due soggetti se messi ad interagire in un piano interagiscono respingendosi, attraendosi e disperdendosi in esso, con la conseguente generazione di pattern diversi tra loro.
+        Questo comportamento è descritto in maniera generale dal modello Gray-Scott, e dalla c
+        </p>
+    </div>
+    </section>
+
+    <section>
+    <h3 class="testata">Particelle</h3>
+    <div class="contenuto">
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        </p>
+    </div>
+    </section>
+
+    <section>
+    <h3 class="testata">Matrice</h3>
+    <div class="contenuto">
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        </p>
+    </div>
+    </section>
+
+    <section>
+    <h3 class="testata">Laplace</h3>
+    <div class="contenuto">
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        </p>
+    </div>
+    </section>
+
+     <section>
+    <h3 class="testata">Variabili</h3>
+    <div class="contenuto">
+        <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        </p>
+    </div>
+    </section>
+
+     <section>
+    <h3 class="testata">Riferimenti</h3>
+    <div class="contenuto">
+        <p>
+        A. M. Turing, <a rel="The chemical basis of morphogenesis" href="https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.1952.0012" class="links">The chemical basis of morphogenesis</a> (1952)<br>
+        Karl Sims, <a rel="Reaction-Diffusion" href="https://www.karlsims.com/rd.html" class="links">Reaction-Diffusion Tutorial</a> (2013)<br>
+        Daniel Shiffman, <a rel="Reaction Diffusion Algorithm" href="https://thecodingtrain.com/challenges/13-reaction-diffusion" class="links">Reaction Diffusion Algorithm</a> (2016)<br>
+        Arsiliath, <a rel="Reaction Diffusion: A Visual Explanation" href="https://youtu.be/LMzYrsfTiEw?si=Sbksua0qD7H1EJCS" class="links">Reaction Diffusion: A Visual Explanation</a> (2019)<br>
+        Robert Munafo, <a rel="Reaction-Diffusion by the Gray-Scott Model" href="https://mrob.com/pub/comp/xmorphia/" class="links">Reaction-Diffusion by the Gray-Scott Model</a> (2022)<br>
+        Jason Webb, <a rel="Reaction Diffusion Playground" href="https://jasonwebb.github.io/reaction-diffusion-playground/" class="links">Reaction Diffusion playground</a> (2023)<br>
+        B. Walker, A. Townsend, A. Krause, <a rel="Visual PDE" href="https://visualpde.com/sim/?preset=GrayScott" class="links">VisualPDE</a> (2025)<br>
+        </p>
+    </div>
+    </section>      
+    </div>
+
+    </div>
 </body>
 </html>
