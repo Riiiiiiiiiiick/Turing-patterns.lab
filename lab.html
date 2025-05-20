@@ -93,7 +93,7 @@
     <div class="columns">  
 		<div class="column testo">
     <section>
-    <h3 class="testata">Introduzione</h3>
+    <h3 class="testata" style="margin-top: 0;">Introduzione</h3>
     <div class="contenuto">
         <p class="subheader">
             01. tra l'organico e il computazionale
@@ -111,22 +111,36 @@
         <p>
         I modelli di Reaction-Diffusion si basano principalemnte sull'interazione di 2 soggetti dispersi su un piano. Essi, da un punto di vista biologico, sono considerabili come sostanza chimiche mentre da quello matematico come delle variabili che assumono un valore diverso a seguito della loro stessa elaborazione attraverso una funzione.
         Quando i soggetti vengono dispersi inizia una reazione di diffusione e conversione tra le due sostanze, con la conseguente generazione di pattern diversi tra loro. Le forme ottenute dipendono da una serie di variabili componenti l'equazione che descrive il modello di Reaction-Diffusion. 
-        Questo comportamento è descritto in maniera generale dal modello Gray-Scott e dalle sue due equazioni (una a sostanza), i quali output generano un loop che permette alla reazione e di modificarsi ed avvenire col passare del tempo. <br>
+        Questo comportamento è descritto in maniera generale dal <span class="texti">modello Gray-Scott</span> e dalle sue due equazioni (una a sostanza), i quali output generano un loop che permette alla reazione e di modificarsi ed avvenire col passare del tempo.
         Le seguenti equazioni descrivono il modello Gray-Scott: <br>
         <div class="equation" style="padding-top: 1.1em;">\( \displaystyle\frac{\partial A}{\partial t} = D_A \nabla^2 A - A B^2 + f(1 - A)\)</div>
         <div class="equation">\(\displaystyle\frac{\partial B}{\partial t} = D_B \nabla^2 B + A B^2 - (k + f) B\)</div> <br>
-        La variazione degli elementi di queste funzioni restituiscono una serie di output visivi diversi. Nel tempo si è iniziato a classificare le simulazioni ottenute in: <span class="texti">particelle stazionarie (mitosi), strisce (coralli), modelli a bersaglio e spiraliformi</span>.
+        La variazione degli elementi di queste funzioni restituiscono una serie di output visivi diversi. Nel tempo si è iniziato a classificare le simulazioni ottenute come <span class="texti" style="text-transform: none;">tipi R / B / α / β / γ / δ / <a ref="k-map" href="https://mrob.com/pub/comp/xmorphia/pearson-classes.html" class="links">ecc…</a></span> (i pattern generati possono ricordare particelle in mitosi, strisce, coralli, impronte digitali, modelli a bersaglio e spiraliformi). Inoltre è stata generata una <a ref="k-map" href="https://mrob.com/pub/comp/xmorphia/pearson-classes.html" class="links">mappa parametrica</a> che elenca tutte le possibili variazioni nei pattern in base al variare dei parametri inseriti nelle funzioni.
         </p>
     </div>
     </section>
 
     <section>
-    <h3 class="testata">Particelle</h3>
-    <div class="contenuto">
+    <h3 class="testata">sostanze</h3>
+    <div class="contenuto"> <span class="texti"></span>
+
+        <p class="subheader">
+            01. principio
+        </p>
         <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Prima di esaminare tutte le variabili e le operazioni, svolte delle funzioni del modello Gray-Scott, è necessario comprendere la dinamica tra le due sostanze.
+        All'interno di questo sistema di Reaction-Diffusion le sostanze <span class="texti" style="text-transform: none;">A</span> e <span class="texti" style="text-transform: none;">B</span> si diffondono sul piano e hanno una reazione, che per comodità, è definita come un rapporto di <span class="texti">preda e cacciatrice</span> in quanto la sostanza <span class="texti" style="text-transform: none;">B caccia</span> la sostanza <span class="texti" style="text-transform: none;">A trasformandola in B</span>.
+        Quando le sostanze <span class="texti" style="text-transform: none;">A</span> e <span class="texti" style="text-transform: none;">B</span> vengono aggiunte sul piano hanno due <span class="texti">velocità di diffusione diverse</span>, mentre la loro reazione è mantenuta in equilibrio da due variabili chiamate <span class="texti" style="text-transform: none;">feed</span> e <span class="texti" style="text-transform: none;">kill rate</span>. 
+        In questo modo la sostanza <span class="texti" style="text-transform: none;">A</span> viene aumentata o aggiunta ad un determinato <span class="texti" style="text-transform: none;">valore di feed</span> mentre la sostanza <span class="texti" style="text-transform: none;">B</span> viene rimossa ad un determinato <span class="texti" style="text-transform: none;">valore di kill</span>impedendo alla sostanza B di eliminare completamente la sostanza A. 
+        </p>
+
+        <p class="subheaderpost">
+            02. variabili
+        </p>
+        <p>
+            <div class="equation" style="padding-top: 0;">\( \displaystyle\frac{\partial A}{\partial t} = D_A \nabla^2 A - A B^2 + f(1 - A)\)</div>
+            <div class="equation">\(\displaystyle\frac{\partial B}{\partial t} = D_B \nabla^2 B + A B^2 - (k + f) B\)</div> <br>
+            Una volta compresa la dinamica che avviene tra le sostanze si può passare all'analisi dei singoli componenti delle funzioni.<br>
         </p>
     </div>
     </section>
@@ -164,7 +178,7 @@
     </div>
     </section>
 
-     <section>
+     <section style="margin-bottom: 0;">
     <h3 class="testata">Riferimenti</h3>
     <div class="contenuto">
         <p>
@@ -175,6 +189,8 @@
         Robert Munafo, <a rel="Reaction-Diffusion by the Gray-Scott Model" href="https://mrob.com/pub/comp/xmorphia/" class="links">Reaction-Diffusion by the Gray-Scott Model</a> (2022)<br>
         Jason Webb, <a rel="Reaction Diffusion Playground" href="https://jasonwebb.github.io/reaction-diffusion-playground/" class="links">Reaction Diffusion playground</a> (2023)<br>
         B. Walker, A. Townsend, A. Krause, <a rel="Visual PDE" href="https://visualpde.com/sim/?preset=GrayScott" class="links">VisualPDE</a> (2025)<br>
+        <br>
+        <p class="caption">ricerca / progetto grafico di riccardo toniolo</p>
         </p>
     </div>
     </section>
@@ -182,87 +198,22 @@
 
     <div class="column foto"> 
         <section>
-    <h3 class="testata">Introduzione</h3>
-    <div class="contenuto">
-        <p class="subheader">
-            01. tra l'organico e il computazionale
-        </p>
-        <p>
-        Una prima descrizione del sistema Reaction-Diffusion venne presentata da Alan Turing attraverso <a rel="The chemical basis of morphogenesis" href="https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.1952.0012" class="links">The chemical basis of morphogenesis</a> (1952).
-        L’articolo descrive come il processo di sviluppo di determinate forme o strutture organiche è determinato da sistemi di sostanze chimiche chiamate morfogeni.
-	    I morfogeni si occupano di governare lo sviluppo dei tessuti nonché il posizionamento di determinate cellule in esso.
-	    Turing oltre ad aver evidenziato la questione dal punto di vista biologico, argomentando come questi processi avvengano e definiscano un organismo a partire dalla fase embrionale dello sviluppo, ha fornito anche un’attenta analisi del fenomeno dal punto di vista matematico (Inoltre descrisse come queste strutture, partendo da una situazione di equilibrio, possano sviluppare dei pattern più o meno regolari a partire da dei disturbi randomici e da oscillazioni meccaniche ed elettriche).
-        </p>
+            <div class="imgc">
+    <img src="assets/rdrt (2).jpg" alt="rdrt">
+    <img src="assets/rdrt (2).jpg" alt="rdrt">
+    <img src="assets/rdrt (2).jpg" alt="rdrt">
+    <p class="caption">Una cap stupenda</p>
+    <img src="assets/rdrt (2).jpg" alt="rdrt">
+    <p class="caption">Una cap stupenda</p>
+            </div>
+    </section>
 
-        <p class="subheaderpost">
-            02. modelli e pattern
-        </p>
-        <p>
-        I modelli di Reaction-Diffusion si basano principalemnte sull’interazione di 2 soggetti. Da un punto di vista biologico essi sono considerabili come sostanza chimiche, mentre su un piano matematico come due variabili che assumono un valore diverso a seguito della loro stessa elaborazione attraverso una funzione.
-        I due soggetti se messi ad interagire in un piano interagiscono respingendosi, attraendosi e disperdendosi in esso, con la conseguente generazione di pattern diversi tra loro.
-        Questo comportamento è descritto in maniera generale dal modello Gray-Scott, e dalla c
-        </p>
+     <section style="margin-bottom: 0;">
+    <div class="contenuto">
+        <p class="caption">made-isia 05.2025</p>
     </div>
     </section>
 
-    <section>
-    <h3 class="testata">Particelle</h3>
-    <div class="contenuto">
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        </p>
-    </div>
-    </section>
-
-    <section>
-    <h3 class="testata">Matrice</h3>
-    <div class="contenuto">
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        </p>
-    </div>
-    </section>
-
-    <section>
-    <h3 class="testata">Laplace</h3>
-    <div class="contenuto">
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        </p>
-    </div>
-    </section>
-
-     <section>
-    <h3 class="testata">Variabili</h3>
-    <div class="contenuto">
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        </p>
-    </div>
-    </section>
-
-     <section>
-    <h3 class="testata">Riferimenti</h3>
-    <div class="contenuto">
-        <p>
-        A. M. Turing, <a rel="The chemical basis of morphogenesis" href="https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.1952.0012" class="links">The chemical basis of morphogenesis</a> (1952)<br>
-        Karl Sims, <a rel="Reaction-Diffusion" href="https://www.karlsims.com/rd.html" class="links">Reaction-Diffusion Tutorial</a> (2013)<br>
-        Daniel Shiffman, <a rel="Reaction Diffusion Algorithm" href="https://thecodingtrain.com/challenges/13-reaction-diffusion" class="links">Reaction Diffusion Algorithm</a> (2016)<br>
-        Arsiliath, <a rel="Reaction Diffusion: A Visual Explanation" href="https://youtu.be/LMzYrsfTiEw?si=Sbksua0qD7H1EJCS" class="links">Reaction Diffusion: A Visual Explanation</a> (2019)<br>
-        Robert Munafo, <a rel="Reaction-Diffusion by the Gray-Scott Model" href="https://mrob.com/pub/comp/xmorphia/" class="links">Reaction-Diffusion by the Gray-Scott Model</a> (2022)<br>
-        Jason Webb, <a rel="Reaction Diffusion Playground" href="https://jasonwebb.github.io/reaction-diffusion-playground/" class="links">Reaction Diffusion playground</a> (2023)<br>
-        B. Walker, A. Townsend, A. Krause, <a rel="Visual PDE" href="https://visualpde.com/sim/?preset=GrayScott" class="links">VisualPDE</a> (2025)<br>
-        </p>
-    </div>
-    </section>      
     </div>
 
     </div>
