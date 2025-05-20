@@ -1,98 +1,143 @@
-/*
+var grid;
+var next;
 
-let A, B, Anext, Bnext;
-let dA = 1.0;
-let dB = 0.5;
-let feed = 0.055;
-let kill = 0.062;
-let rows, cols;
-let graphics;
+let scala = 4;
+let cols, rows;
+
+var dA = 1 / 2;
+var dB = 0.5 / 2;
+var feed = 0.04388;
+var k = 0.06113;
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    pixelDensity(1);
-  
-    cols = windowWidth;
-    rows = windowHeight;
-  
-    A = Array(rows).fill().map(() => Array(cols).fill(1));
-    B = Array(rows).fill().map(() => Array(cols).fill(0));
-    Anext = Array(rows).fill().map(() => Array(cols).fill(1));
-    Bnext = Array(rows).fill().map(() => Array(cols).fill(0));
-  
-    // Seed a square of B in the center
-    for (let y = rows/2 - 10; y < rows/2 + 10; y++) {
-      for (let x = cols/2 - 10; x < cols/2 + 10; x++) {
-        B[y][x] = 1;
-      }
+  createCanvas(windowWidth, windowHeight);
+  frameRate(30);
+  pixelDensity(1);
+  noSmooth();
+
+  cols = floor(width / scala);
+  rows = floor(height / scala);
+
+  grid = [];
+  next = [];
+  for (var x = 0; x < cols; x++) {
+    grid[x] = [];
+    next[x] = [];
+    for (var y = 0; y < rows; y++) {
+      grid[x][y] = { a: 1, b: 0 };
+      next[x][y] = { a: 0.1, b: 1 };
     }
-  
-    graphics = createGraphics(cols, rows);
-    graphics.pixelDensity(1);
   }
+}
 
 function draw() {
-  for (let i = 0; i < 2; i++) {
-    updateReaction();
+  background(10);
+
+  if (mouseIsPressed) {
+    let steps = 20;
+    for (let i = 0; i <= steps; i++) {
+      let lerpX = lerp(pmouseX, mouseX, i / steps);
+      let lerpY = lerp(pmouseY, mouseY, i / steps);
+
+      let mx = floor(lerpX / scala);
+      let my = floor(lerpY / scala);
+      let r = 5;
+
+      for (let dx = -r; dx <= r; dx++) {
+        for (let dy = -r; dy <= r; dy++) {
+          if (dx * dx + dy * dy <= r * r) {
+            let x = mx + dx;
+            let y = my + dy;
+            let tx = (x + cols) % cols;
+            let ty = (y + rows) % rows;
+            grid[tx][ty].b = 1;
+          }
+        }
+      }
+    }
   }
 
-  graphics.loadPixels();
-  for (let y = 0; y < rows; y++) {
+  for (let n = 0; n < 4; n++) {
     for (let x = 0; x < cols; x++) {
-      let a = A[y][x];
-      let b = B[y][x];
-      let c = floor((a - b) * 255);
-      c = constrain(c, 0, 255);
-      let index = (x + y * cols) * 4;
-      graphics.pixels[index + 0] = c; // Red
-      graphics.pixels[index + 1] = c; // Green
-      graphics.pixels[index + 2] = c; // Blue
-      graphics.pixels[index + 3] = 255;
+      for (let y = 0; y < rows; y++) {
+        let a = grid[x][y].a;
+        let b = grid[x][y].b;
+        next[x][y].a = a + dA * laplaceA(x, y) - a * b * b + feed * (1 - a);
+        next[x][y].b = b + dB * laplaceB(x, y) + a * b * b - (k + feed) * b;
+
+        next[x][y].a = constrain(next[x][y].a, 0, 1);
+        next[x][y].b = constrain(next[x][y].b, 0, 1);
+      }
     }
-  }
-  graphics.updatePixels();
-  image(graphics, 0, 0);
-}
-
-function updateReaction() {
-  for (let y = 1; y < rows - 1; y++) {
-    for (let x = 1; x < cols - 1; x++) {
-      let a = A[y][x];
-      let b = B[y][x];
-
-      let lapA = laplace(x, y, A);
-      let lapB = laplace(x, y, B);
-
-      let reaction = a * b * b;
-      Anext[y][x] = a + (dA * lapA - reaction + feed * (1 - a));
-      Bnext[y][x] = b + (dB * lapB + reaction - (kill + feed) * b);
-
-      Anext[y][x] = constrain(Anext[y][x], 0, 1);
-      Bnext[y][x] = constrain(Bnext[y][x], 0, 1);
-    }
+    swap();
   }
 
-  [A, Anext] = [Anext, A];
-  [B, Bnext] = [Bnext, B];
+  loadPixels();
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      let a = grid[x][y].a;
+      let b = grid[x][y].b;
+      let diff = a - b;
+      let useBright = diff > 0.1;
+
+      let rCol = useBright ? 10 : 192;
+      let gCol = useBright ? 10 : 192;
+      let bCol = useBright ? 10 : 192;
+
+      for (let dx = 0; dx < scala; dx++) {
+        for (let dy = 0; dy < scala; dy++) {
+          let px = x * scala + dx;
+          let py = y * scala + dy;
+          let i = 4 * (px + py * width);
+          if (i >= 0 && i + 3 < pixels.length) {
+            pixels[i] = rCol;
+            pixels[i + 1] = gCol;
+            pixels[i + 2] = bCol;
+            pixels[i + 3] = 255;
+          }
+        }
+      }
+    }
+  }
+  updatePixels();
 }
 
-function laplace(x, y, grid) {
-  let sum = 0;
-  sum += grid[y][x] * -1;
-  sum += grid[y - 1][x] * 0.2;
-  sum += grid[y + 1][x] * 0.2;
-  sum += grid[y][x - 1] * 0.2;
-  sum += grid[y][x + 1] * 0.2;
-  sum += grid[y - 1][x - 1] * 0.05;
-  sum += grid[y - 1][x + 1] * 0.05;
-  sum += grid[y + 1][x - 1] * 0.05;
-  sum += grid[y + 1][x + 1] * 0.05;
-  return sum;
+function laplaceA(x, y) {
+  let sumA = 0;
+  sumA += grid[x][y].a * -1;
+
+  sumA += grid[(x - 1 + cols) % cols][y].a * 0.2;
+  sumA += grid[(x + 1) % cols][y].a * 0.2;
+  sumA += grid[x][(y - 1 + rows) % rows].a * 0.2;
+  sumA += grid[x][(y + 1) % rows].a * 0.2;
+
+  sumA += grid[(x - 1 + cols) % cols][(y - 1 + rows) % rows].a * 0.05;
+  sumA += grid[(x + 1) % cols][(y - 1 + rows) % rows].a * 0.05;
+  sumA += grid[(x + 1) % cols][(y + 1) % rows].a * 0.05;
+  sumA += grid[(x - 1 + cols) % cols][(y + 1) % rows].a * 0.05;
+
+  return sumA;
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-  background(10, 10, 10);
+function laplaceB(x, y) {
+  let sumB = 0;
+  sumB += grid[x][y].b * -1;
+
+  sumB += grid[(x - 1 + cols) % cols][y].b * 0.2;
+  sumB += grid[(x + 1) % cols][y].b * 0.2;
+  sumB += grid[x][(y - 1 + rows) % rows].b * 0.2;
+  sumB += grid[x][(y + 1) % rows].b * 0.2;
+
+  sumB += grid[(x - 1 + cols) % cols][(y - 1 + rows) % rows].b * 0.05;
+  sumB += grid[(x + 1) % cols][(y - 1 + rows) % rows].b * 0.05;
+  sumB += grid[(x + 1) % cols][(y + 1) % rows].b * 0.05;
+  sumB += grid[(x - 1 + cols) % cols][(y + 1) % rows].b * 0.05;
+
+  return sumB;
 }
 
-*/
+function swap() {
+  let temp = grid;
+  grid = next;
+  next = temp;
+}
