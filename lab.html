@@ -11,6 +11,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="stili.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
      <script>
     window.MathJax = {
       tex: {
@@ -30,7 +31,6 @@
       startup: {
         ready: function() {
           MathJax.startup.defaultReady();
-          // Set IBM Plex Mono as the font for all MathJax elements
           document.head.insertAdjacentHTML('beforeend', `
             <style>
               .MJX-TEX {
@@ -57,30 +57,50 @@
 			margin: 0;
             background-color: rgb(10,10,10);
 		}
-		canvas {
-			display: block;
-		}
+		#canvas-container {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
 
-        .mjx-chtml {
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+            display: block;
+        }
+
+        .mjx-chtml,.equation{
             font-weight: 200 !important;
             font-family: "IBM Plex Mono", monospace !important;
             font-style: normal;
-            padding-bottom: 1.1em;
+            padding-bottom: 0.5em;
+            text-indent: 1.1em;
+        }
+
+        .mjx-chtml,.equation{
+            font-weight: 200 !important;
+            font-family: "IBM Plex Mono", monospace !important;
+            font-style: normal;
+            padding-bottom: 0.5em;
             text-indent: 1.1em;
         }
         
-        .mjx-math * {
+        
+        .equation,.mjx-math * {
             font-family: "IBM Plex Mono", monospace !important;
             font-weight: 200 !important;
         }
-        mjx-container {
+        mjx-container,.equation {
             font-family: "IBM Plex Mono", monospace !important;
             font-weight: 200 !important;
         }
-        mjx-container mjx-math {
+        mjx-container mjx-math,.equation {
             font-family: "IBM Plex Mono", monospace !important;
             font-weight: 200 !important;
         }
+
+
 	</style>
 </head>
 
@@ -112,10 +132,10 @@
         I modelli di Reaction-Diffusion si basano principalemnte sull'interazione di 2 soggetti dispersi su un piano. Essi, da un punto di vista biologico, sono considerabili come sostanza chimiche mentre da quello matematico come delle variabili che assumono un valore diverso a seguito della loro stessa elaborazione attraverso una funzione.
         Quando i soggetti vengono dispersi inizia una reazione di diffusione e conversione tra le due sostanze, con la conseguente generazione di pattern diversi tra loro. Le forme ottenute dipendono da una serie di variabili componenti l'equazione che descrive il modello di Reaction-Diffusion. 
         Questo comportamento è descritto in maniera generale dal <span class="texti">modello Gray-Scott</span> e dalle sue due equazioni (una a sostanza), i quali output generano un loop che permette alla reazione e di modificarsi ed avvenire col passare del tempo.
-        Le seguenti equazioni descrivono il modello Gray-Scott: <br>
-        <div class="equation" style="padding-top: 1.1em;">\( \displaystyle\frac{\partial A}{\partial t} = D_A \nabla^2 A - A B^2 + f(1 - A)\)</div>
-        <div class="equation">\(\displaystyle\frac{\partial B}{\partial t} = D_B \nabla^2 B + A B^2 - (k + f) B\)</div> <br>
-        La variazione degli elementi di queste funzioni restituiscono una serie di output visivi diversi. Nel tempo si è iniziato a classificare le simulazioni ottenute come <span class="texti" style="text-transform: none;">tipi R / B / α / β / γ / δ / <a ref="k-map" href="https://mrob.com/pub/comp/xmorphia/pearson-classes.html" class="links">ecc…</a></span> (i pattern generati possono ricordare particelle in mitosi, strisce, coralli, impronte digitali, modelli a bersaglio e spiraliformi). Inoltre è stata generata una <a ref="k-map" href="https://mrob.com/pub/comp/xmorphia/pearson-classes.html" class="links">mappa parametrica</a> che elenca tutte le possibili variazioni nei pattern in base al variare dei parametri inseriti nelle funzioni.
+        Le seguenti equazioni descrivono il modello Gray-Scott:
+        <div class="equation" style="padding-top: 2.2em;">\(A' = A + (D_A \nabla^2 A - A B^2 + f(1 - A))\partial t\)</div>
+        <div class="equation"style="padding-bottom: 2.2em;"">\(B' = B + (D_B \nabla^2 B + A B^2 - (k + f) B)\partial t\)</div>
+        La variazione degli elementi di queste funzioni restituiscono una serie di output visivi diversi. Nel tempo si è iniziato a classificare le simulazioni ottenute come <span class="texti" style="text-transform: none;">tipi R / B / α / β / γ / δ / <a ref="k-map" href="https://mrob.com/pub/comp/xmorphia/pearson-classes.html" class="links">ecc…</a></span> (i pattern generati possono ricordare particelle in mitosi, strisce, coralli, impronte digitali, modelli a bersaglio e spiraliformi). Inoltre è stata generata una <a ref="k-map" href="https://mrob.com/pub/comp/xmorphia/pearson-classes.html" class="links">mappa parametrica</a> che elenca tutte le possibili variazioni nei pattern in base al variare dei parametri inseriti nelle funzioni. <br>
         </p>
     </div>
     </section>
@@ -131,16 +151,34 @@
         Prima di esaminare tutte le variabili e le operazioni, svolte delle funzioni del modello Gray-Scott, è necessario comprendere la dinamica tra le due sostanze.
         All'interno di questo sistema di Reaction-Diffusion le sostanze <span class="texti" style="text-transform: none;">A</span> e <span class="texti" style="text-transform: none;">B</span> si diffondono sul piano e hanno una reazione, che per comodità, è definita come un rapporto di <span class="texti">preda e cacciatrice</span> in quanto la sostanza <span class="texti" style="text-transform: none;">B caccia</span> la sostanza <span class="texti" style="text-transform: none;">A trasformandola in B</span>.
         Quando le sostanze <span class="texti" style="text-transform: none;">A</span> e <span class="texti" style="text-transform: none;">B</span> vengono aggiunte sul piano hanno due <span class="texti">velocità di diffusione diverse</span>, mentre la loro reazione è mantenuta in equilibrio da due variabili chiamate <span class="texti" style="text-transform: none;">feed</span> e <span class="texti" style="text-transform: none;">kill rate</span>. 
-        In questo modo la sostanza <span class="texti" style="text-transform: none;">A</span> viene aumentata o aggiunta ad un determinato <span class="texti" style="text-transform: none;">valore di feed</span> mentre la sostanza <span class="texti" style="text-transform: none;">B</span> viene rimossa ad un determinato <span class="texti" style="text-transform: none;">valore di kill</span>impedendo alla sostanza B di eliminare completamente la sostanza A. 
+        In questo modo la sostanza <span class="texti" style="text-transform: none;">A</span> viene aumentata o aggiunta ad un determinato <span class="texti" style="text-transform: none;">valore di feed</span> mentre la sostanza <span class="texti" style="text-transform: none;">B</span> viene rimossa ad un determinato <span class="texti" style="text-transform: none;">valore di kill</span> impedendo alla sostanza B di eliminare completamente la sostanza A. 
         </p>
 
         <p class="subheaderpost">
             02. variabili
         </p>
         <p>
-            <div class="equation" style="padding-top: 0;">\( \displaystyle\frac{\partial A}{\partial t} = D_A \nabla^2 A - A B^2 + f(1 - A)\)</div>
-            <div class="equation">\(\displaystyle\frac{\partial B}{\partial t} = D_B \nabla^2 B + A B^2 - (k + f) B\)</div> <br>
-            Una volta compresa la dinamica che avviene tra le sostanze si può passare all'analisi dei singoli componenti delle funzioni.<br>
+            <div>Una volta compresa la dinamica di reazione e diffusione è possibile iniziare un'analisi più accurata delle equazioni e dei loro componenti.
+                Di seguito vengono riportate nuovamente le funzioni che descrivono il modello con l'aggiunta di un elenco di ogni loro specifico componente:
+            </div>
+            <div class="equation" style="padding-top: 2.2em;">\(A' = A + (D_A \nabla^2 A - A B^2 + f(1 - A))\partial t\)</div>
+            <div class="equation" style="padding-bottom: 2.2em;">\(B' = B + (D_B \nabla^2 B + A B^2 - (k + f) B)\partial t\)</div>
+            <div class="equation">\( A';B'\) = valori correnti di A e B </div>
+            <div class="equation">\( A;B\) = valori precedenti di A e B</div>
+            <div class="equation">\( D_A;D_B\) = valori di diffusione</div>
+            <div class="equation">\( \nabla^2 A;\nabla^2 B\) = funzioni laplaciane</div>
+            <div class="equation">\( - A B^2;+ A B^2\) = valori di reazione</div>
+            <div class="equation">\(+f(1 - A)\) = valore feed</div>
+            <div class="equation">\(-(k + f) B\) = valore kill</div>
+            <div class="equation" style="padding-bottom: 2.2em;">\( {\partial t}\) = cambiamento nel tempo</div>
+            <div>È necessario specificare che ogni componente necessita di determinate condizioni per premettere lo svolgimento corretto della funzione.
+                Apparte per i <span class="texti" style="text-transform: none;">valori di reazione</span> e <span class="texti" style="text-transform: none;">diffusione</span>
+                che precedentemente abbiamo visto essere rispettivamente, i valori che determinano la <span class="texti" style="text-transform: none;">trasformazione della sostanza A in B</span> (enunciati come differenza e somma dello stesso valore a seconda della funzione)
+                e lo <span class="texti" style="text-transform: none;">spargersi sul piano a velocità diverse</span> (maggiori per A che per B), è obbligatorio mantenere il <span class="texti" style="text-transform: none;">valore feed moltiplicato per (1-A)</span> in modo da rendere il valore di <span class="texti" style="text-transform: none;">A sempre inferiore a 1</span>.
+                Inoltre, il <span class="texti" style="text-transform: none;">valore kill va sottratto da B e moltiplicato per B</span> così da rendere il suo <span class="texti" style="text-transform: none;">valore maggiore di zero</span> e si deve <span class="texti" style="text-transform: none;">sommare con il valore del feed per evitare di avere un output minore del feed stesso</span> (caso che impedirebbe lo svolgersi della reazione).
+                Per quanto riguarda il <span class="texti" style="text-transform: none;">cambiamento del tempo</span> e le <span class="texti" style="text-transform: none;">funzioni laplaciane</span>, possiamo dire che non hanno bisogno di particolari attenzioni perché il primo è un valore che <span class="texti" style="text-transform: none;">rappresenta il cambiamento del tempo per ogni ripetizione</span> (iterazione) della funzione, 
+                mentre le seconde sono delle <span class="texti" style="text-transform: none;">funzioni bi-dimensionali che influenzano la dinamica della diffusione</span> restituendo la differenza tra la media delle celle adiacenti a quella presa in esame.
+            </div>
         </p>
     </div>
     </section>
@@ -148,32 +186,23 @@
     <section>
     <h3 class="testata">Matrice</h3>
     <div class="contenuto">
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        </p>
-    </div>
-    </section>
 
-    <section>
-    <h3 class="testata">Laplace</h3>
-    <div class="contenuto">
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+         <p class="subheader">
+            01. la base del sistema
         </p>
-    </div>
-    </section>
-
-     <section>
-    <h3 class="testata">Variabili</h3>
-    <div class="contenuto">
         <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sut in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Or incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariaatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. isi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br>
+        Ogni sistema di <span class="texti" style="text-transform: none;"></span>Reaction-Diffusion viene svolto sulla base di una matrice. Per ogni <span class="texti" style="text-transform: none;">cella</span> vengono definiti <span class="texti" style="text-transform: none;">due valori numerici</span> che determinano la concentrazione locale di <span class="texti" style="text-transform: none;">A</span> e <span class="texti" style="text-transform: none;">B</span>.
+        Questo calcolo è determinato da delle funzioni laplaciane che operano esattamente come delle matrici di convoluzione, tipologie solitamente utilizzate per ottenere effetti visivi si sharpen, blur o edge-detection.
+        Inoltre, è importante non confondere il concetto di matrice come suddivisione del piano in colonne e righe da quello della matrice intesa come componente delle equazioni che determinano il sistema. La prima permette di circoscrivere l'area nella quale una delle due sostanze risiede, mentre la seconda determina, a partire da un'operazione di convoluzione, il valore di una sostanza presente nell'area esaminata.
+        Nel caso del codice presentato nel <a href="toolset.html" class="links">playground</a> ho deciso di ridurre la risoluzione della matrice (dapprima impostata sui valori di width e height della finestra) in modo da rendere il calcolo delle funzioni laplaciane più veloce. Per ottenere una rappresentazione a risoluzioni più alte è consigliabile l'utilizzo di linguaggi di programmazione chiamati shader, coì basando la computazione sulla GPU del computer e non sul processore.
+        Il calcolo di modelli Reaction-Diffusion o di altri algoritmi state-based (dipendenti dall'iterazione precedente) risulta più rapido perchè i linguaggi di shading riescono a computare simultaneamente le funzioni laplaciane per ogni cella / pixel preso in esame. Tuttavia è necessario convertire i le equazioni che descrivono i modelli per renderle compatibili con questi linguaggi. 
+        </p>
+        <p class="subheaderpost">
+            02. funzioni laplaciane
+        </p>
+        <p>
+        Per quanto riguarda le funzioni laplaciane è utile approfondire il loro funzionamento in modo da capire il loro ruolo nella dinamica della diffusione. Le laplaciane funzionano esattamente come delle matrici di convoluzione, sono formate quindi da un kernel (centro) che si sovrappone alla cella della matrice presa in esame ed effettuano una somma pesata dei valori della cella e delle celle adiacenti.
+        Nel caso di quelle presenti nelle equazioni del modello Gray-Scott hanno un'area di 3×3 (celle) e dei valori di -1 per il kernel, 0.2 per le celle adiacenti e 0.05 per le celle diagonali.
         </p>
     </div>
     </section>
@@ -186,31 +215,40 @@
         Karl Sims, <a rel="Reaction-Diffusion" href="https://www.karlsims.com/rd.html" class="links">Reaction-Diffusion Tutorial</a> (2013)<br>
         Daniel Shiffman, <a rel="Reaction Diffusion Algorithm" href="https://thecodingtrain.com/challenges/13-reaction-diffusion" class="links">Reaction Diffusion Algorithm</a> (2016)<br>
         Arsiliath, <a rel="Reaction Diffusion: A Visual Explanation" href="https://youtu.be/LMzYrsfTiEw?si=Sbksua0qD7H1EJCS" class="links">Reaction Diffusion: A Visual Explanation</a> (2019)<br>
+        ciphrd, <a rel="Reaction Diffusion on shader" href="https://ciphrd.com/2019/08/24/reaction-diffusion-on-shader/" class="links">Reaction Diffusion on shader</a> (2019)<br>
         Robert Munafo, <a rel="Reaction-Diffusion by the Gray-Scott Model" href="https://mrob.com/pub/comp/xmorphia/" class="links">Reaction-Diffusion by the Gray-Scott Model</a> (2022)<br>
         Jason Webb, <a rel="Reaction Diffusion Playground" href="https://jasonwebb.github.io/reaction-diffusion-playground/" class="links">Reaction Diffusion playground</a> (2023)<br>
-        B. Walker, A. Townsend, A. Krause, <a rel="Visual PDE" href="https://visualpde.com/sim/?preset=GrayScott" class="links">VisualPDE</a> (2025)<br>
-        <br>
-        <p class="caption">ricerca / progetto grafico di riccardo toniolo</p>
+        B. Walker, A. Townsend, A. Krause, <a rel="Visual PDE" href="https://visualpde.com/sim/?preset=GrayScott" class="links">VisualPDE</a> (2025)
+        <p class="caption" style="margin-top: 3.3em; padding: 0;" >ricerca / progetto grafico di <a class="links" rel="(˶°ㅁ°) !!" href="https://www.instagram.com/sometimes.rick/">riccardo toniolo</a></p>
         </p>
     </div>
     </section>
     </div>
 
     <div class="column foto"> 
-        <section>
+        <section style="margin-bottom: 0;">
             <div class="imgc">
-    <img src="assets/rdrt (2).jpg" alt="rdrt">
-    <img src="assets/rdrt (2).jpg" alt="rdrt">
-    <img src="assets/rdrt (2).jpg" alt="rdrt">
-    <p class="caption">Una cap stupenda</p>
-    <img src="assets/rdrt (2).jpg" alt="rdrt">
-    <p class="caption">Una cap stupenda</p>
+    <img src="assets/pescepalla.jpg" alt="rdrt">
+    <p class="caption">dettaglio della pelle di un pescepalla © National Geographic</p>
+    <img src="assets/ghepardo.jpg" alt="rdrt">
+    <p class="caption">dettaglio del manto di un ghepardo</p>
+    <div class="imgc">
+        <img src="assets/rdrt (2).jpg" alt="rdrt">
+    </div>
+    <p class="caption">Esempio di un pattern di Tipo kappa (κ) <br> ottenuto nel <a style="font-size: small;" class="links" href="toolset.html">playground</a> con valori f = 0.04388 / k = 0.06113
+    </p>
+    <div class="imgc">
+        <div id="canvas-container" class="jscanvas"></div>
+        <script src="matrice.js"></script>
+    </div>
+    
+    <p class="caption" style="padding-bottom: 0;">esempio di reazione con le celle della matrice in evidenza</p>
             </div>
     </section>
 
      <section style="margin-bottom: 0;">
     <div class="contenuto">
-        <p class="caption">made-isia 05.2025</p>
+        <p class="caption" style="margin: 0; padding: 0;">made-isia 05.2025</p>
     </div>
     </section>
 
