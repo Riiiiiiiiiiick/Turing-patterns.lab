@@ -4,9 +4,9 @@ let next;
 let scala = 1;
 let cols, rows;
 
-let dA = 1.15;
-let dB = 0.55;
-let feed = 0.04388;
+let dA = 1.05;
+let dB = 0.5;
+let feed = 0.05388;
 let k = 0.06113;
 
 let startTime;
@@ -59,7 +59,7 @@ function inizioSim() {
     next[x] = new Array(rows);
     for (let y = 0; y < rows; y++) {
       grid[x][y] = { a: 1, b: 0 };
-      next[x][y] = { a: 0.1, b: 1 };
+      next[x][y] = { a: 1, b: 0 };
     }
   }
 
@@ -76,23 +76,14 @@ function inizioSim() {
 function draw() {
   background(10);
 
-  let elapsed = millis() - startTime;
-
-  if (elapsed < 2000) {
-    scala = 1;
-  } else {
-    let t = constrain((elapsed - 2000) / 3000, 0, 1);
-    scala = floor(lerp(1, 5, t * t));
-  }
+  scala = 5;
 
   if (scala !== lastScala) {
     inizioSim();
     lastScala = scala;
-    return;
   }
 
-  let t = constrain((elapsed - 2000) / 8000, 0, 1);
-  let speedFactor = t * t;
+  let speedFactor = 1;
 
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
@@ -163,6 +154,7 @@ function draw() {
   updatePixels();
   swap();
 }
+
 
 
 function laplaceA(x, y) {
