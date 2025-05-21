@@ -25,7 +25,7 @@ function setup() {
     next[x] = [];
     for (var y = 0; y < rows; y++) {
       grid[x][y] = { a: 1, b: 0 };
-      next[x][y] = { a: 0.1, b: 1 };
+      next[x][y] = { a: 1, b: 0 };
     }
   }
 }
