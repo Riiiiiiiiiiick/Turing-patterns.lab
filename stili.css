@@ -98,7 +98,7 @@ p {
 
 .caption {
     font-size: small;
-    padding-top: 0.15em;
+    padding-top: 0.9em;
     padding-bottom: 2.2em;
 }
 
@@ -163,11 +163,10 @@ h3 {
     position: absolute;
     bottom: 0;
     white-space: nowrap;
-    cursor: pointer;
     text-decoration: none;
 }
 
-.ricl:hover, .biblio:hover, .links:hover {
+.ricl:hover, .links:hover {
     text-underline-offset: 0.15em;
     text-decoration: underline 0.15px solid silver;
 }
