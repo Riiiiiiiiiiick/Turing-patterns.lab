@@ -191,18 +191,19 @@
             01. la base del sistema
         </p>
         <p>
-        Ogni sistema di <span class="texti" style="text-transform: none;"></span>Reaction-Diffusion viene svolto sulla base di una matrice. Per ogni <span class="texti" style="text-transform: none;">cella</span> vengono definiti <span class="texti" style="text-transform: none;">due valori numerici</span> che determinano la concentrazione locale di <span class="texti" style="text-transform: none;">A</span> e <span class="texti" style="text-transform: none;">B</span>.
-        Questo calcolo è determinato da delle funzioni laplaciane che operano esattamente come delle matrici di convoluzione, tipologie solitamente utilizzate per ottenere effetti visivi si sharpen, blur o edge-detection.
-        Inoltre, è importante non confondere il concetto di matrice come suddivisione del piano in colonne e righe da quello della matrice intesa come componente delle equazioni che determinano il sistema. La prima permette di circoscrivere l'area nella quale una delle due sostanze risiede, mentre la seconda determina, a partire da un'operazione di convoluzione, il valore di una sostanza presente nell'area esaminata.
-        Nel caso del codice presentato nel <a href="toolset.html" class="links">playground</a> ho deciso di ridurre la risoluzione della matrice (dapprima impostata sui valori di width e height della finestra) in modo da rendere il calcolo delle funzioni laplaciane più veloce. Per ottenere una rappresentazione a risoluzioni più alte è consigliabile l'utilizzo di linguaggi di programmazione chiamati shader, coì basando la computazione sulla GPU del computer e non sul processore.
-        Il calcolo di modelli Reaction-Diffusion o di altri algoritmi state-based (dipendenti dall'iterazione precedente) risulta più rapido perchè i linguaggi di shading riescono a computare simultaneamente le funzioni laplaciane per ogni cella / pixel preso in esame. Tuttavia è necessario convertire i le equazioni che descrivono i modelli per renderle compatibili con questi linguaggi. 
+        Ogni sistema di <span class="texti" style="text-transform: none;"> Reaction-Diffusion viene svolto sulla base di una matrice </span>. Per ogni <span class="texti" style="text-transform: none;">cella</span> vengono definiti <span class="texti" style="text-transform: none;">due valori numerici</span> che determinano la concentrazione locale di <span class="texti" style="text-transform: none;">A</span> e <span class="texti" style="text-transform: none;">B</span>.
+        Questo calcolo è <span class="texti" style="text-transform: none;">determinato da delle funzioni laplaciane</span> che operano esattamente come delle <a class="links" href="https://davidobexer.github.io/Filtri-convoluzionali/">matrici di convoluzione</a>, tipologie solitamente utilizzate per ottenere <span class="texti" style="text-transform: none;">effetti visivi si sharpen, blur o edge-detection</span>.
+        Inoltre, è importante <span class="texti" style="text-transform: none;">non confondere il concetto di matrice</span> come suddivisione del piano in colonne e righe da quello della matrice intesa come componente delle equazioni che determinano il sistema. <span class="texti" style="text-transform: none;">La prima permette di circoscrivere l'area nella quale una delle due sostanze risiede</span>, mentre <span class="texti" style="text-transform: none;">la seconda determina</span>, a partire da un'operazione di convoluzione, <span class="texti" style="text-transform: none;">il valore di una sostanza presente nell'area esaminata</span>.
+        Nel caso del codice presentato nel <a href="toolset.html" class="links">playground</a> ho deciso di ridurre la risoluzione della matrice (dapprima impostata sui valori di width e height della finestra) in modo da rendere il calcolo delle funzioni laplaciane più veloce. Per ottenere una rappresentazione a <span class="texti" style="text-transform: none;">risoluzioni più alte è consigliabile l'utilizzo di</span> linguaggi di programmazione chiamati <span class="texti" style="text-transform: none;">shader</span>, coì basando la computazione sulla GPU del computer e non sul processore.
+        Il calcolo di modelli Reaction-Diffusion o di altri algoritmi state-based (dipendenti dall'iterazione precedente) risulta più rapido perché i linguaggi di shading <span class="texti" style="text-transform: none;">riescono a computare in parallelo le funzioni laplaciane</span> per ogni cella / pixel preso in esame. Tuttavia è necessario convertire le equazioni dei modelli per renderle compatibili con questi linguaggi. 
         </p>
         <p class="subheaderpost">
             02. funzioni laplaciane
         </p>
         <p>
-        Per quanto riguarda le funzioni laplaciane è utile approfondire il loro funzionamento in modo da capire il loro ruolo nella dinamica della diffusione. Le laplaciane funzionano esattamente come delle matrici di convoluzione, sono formate quindi da un kernel (centro) che si sovrappone alla cella della matrice presa in esame ed effettuano una somma pesata dei valori della cella e delle celle adiacenti.
-        Nel caso di quelle presenti nelle equazioni del modello Gray-Scott hanno un'area di 3×3 (celle) e dei valori di -1 per il kernel, 0.2 per le celle adiacenti e 0.05 per le celle diagonali.
+        Per quanto riguarda le funzioni laplaciane è utile approfondire il loro funzionamento in modo da capire il loro ruolo nella dinamica della diffusione. Le laplaciane funzionano esattamente come delle <a class="links" href="https://davidobexer.github.io/Filtri-convoluzionali/">matrici di convoluzione</a>, sono formate quindi da un <span class="texti" style="text-transform: none;">kernel che si sovrappone</span> (centro) alla cella della matrice presa in esame ed <span class="texti" style="text-transform: none;">effettuano una somma pesata dei valori della cella e delle celle adiacenti</span>.
+        Nel caso di quelle presenti nelle equazioni del modello Gray-Scott hanno <span class="texti" style="text-transform: none;">un'area pari a 3×3 (celle)</span> e dei valori di -1 per il kernel, 0.2 per le celle adiacenti e 0.05 per le celle diagonali. <span class="texti" style="text-transform: none;">I valori</span> della matrice sono stati selezionati per <span class="texti" style="text-transform: none;"></span>la loro somma che è uguale a 0 e permettono di <span class="texti" style="text-transform: none;"></span>mantenere la massa delle sostanze invariata, mentre la loro 
+        <span class="texti" style="text-transform: none;">disposizione è dettata da una convenienza</span> che vede il raggruppamento dei <span class="texti" style="text-transform: none;">valori maggiori in adiacenza al kernel</span> poichè sono più vicini geometricamente ad esso.
         </p>
     </div>
     </section>
@@ -253,7 +254,7 @@
     </section>
 
      <section style="margin-bottom: 0;">
-    <div class="contenuto">
+    <div class="contenuto" style="padding-left: 0;">
         <p class="caption" style="margin: 0; padding: 0;">made-isia 05.2025</p>
     </div>
     </section>
