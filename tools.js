@@ -4,10 +4,10 @@ var next;
 let scala = 4;
 let cols, rows;
 
-var dA = 1 / 2;
-var dB = 0.5 / 2;
-var feed = 0.04388;
-var k = 0.06113;
+var dA = 1;
+var dB = 0.5;
+var feed = 0.05;
+var k = 0.06;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
