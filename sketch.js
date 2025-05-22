@@ -1,16 +1,16 @@
 let grid;
 let next;
 
-let scala = 1;
+let scala = 2;
 let cols, rows;
 
-let dA = 1.05;
+let dA = 1.0;
 let dB = 0.5;
-let feed = 0.05388;
-let k = 0.06113;
+let feed = 0.045;
+let k = 0.06;
 
 let startTime;
-let lastScala = -1;
+let lastScala = +2;
 let pg;
 let textLayer;
 
